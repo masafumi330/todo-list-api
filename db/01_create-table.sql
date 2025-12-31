@@ -1,11 +1,14 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE todos (
+CREATE TABLE IF NOT EXISTS todos (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
-    description TEXT
+    description TEXT,
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
