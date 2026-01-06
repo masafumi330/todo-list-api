@@ -6,6 +6,17 @@
 - [] POST /logout
 - [] ユーザーがログアウトしたとき、セッションIDを無効
 
+## セッション管理
+スキーマ定義
+storage: redis
+table: sessions
+  - session_id: string (primary key)
+  - user_id: integer (foreign key to users table)
+  - created_at: datetime
+  - expires_at: datetime
+セッションの削除タイミング
+  - 有効期限切れ
+  - ユーザーログアウト時
 
 # Goals
 The skills you will learn from this project include:

@@ -27,22 +27,28 @@ func NewUserUsecase(db *sql.DB) *UserUsecase {
 	}
 }
 
-func (uc *UserUsecase) Register(name, email, password string) error {
+func (uc *UserUsecase) Register(name, email, password string) (int, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	_, err = uc.db.Exec(
+	result, err := uc.db.Exec(
 		"INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
 		name, email, string(hashedPassword),
 	)
 	if err != nil {
 		var mysqlErr *mysql.MySQLError
 		if errors.As(err, &mysqlErr) && mysqlErr.Number == 1062 {
-			return ErrEmailAlreadyExists
+			return 0, ErrEmailAlreadyExists
 		}
-		return err
+		return 0, err
 	}
-	return nil
+
+	id, err := result.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(id), nil
 }
