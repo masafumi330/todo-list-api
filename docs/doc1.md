@@ -1,3 +1,12 @@
+# Tasks
+- [x] POST /register
+- [] ユーザーが新規登録したとき、Set-CookieでセッションIDを発行する
+- [] POST /login
+- [] ユーザーがログインしたとき、Set-CookieでセッションIDを発行する
+- [] POST /logout
+- [] ユーザーがログアウトしたとき、セッションIDを無効
+
+
 # Goals
 The skills you will learn from this project include:
 
